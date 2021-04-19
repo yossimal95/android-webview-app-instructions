@@ -1,0 +1,78 @@
+# AndroidManifest.xml
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.myNewkirya.app">
+    <uses-permission android:name="android.permission.INTERNET" /> // מאשר גישה לרשת
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/main_logo" // נתיב ללוגו
+        android:label="קריה-פון" // name your app שם לאפליקציה
+        android:roundIcon="@mipmap/main_logo" // נתיב ללוגו
+        android:supportsRtl="true"
+        android:theme="@style/Theme.MyNewApplication">
+        <activity android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar"> // מבטל את הנב-בר למעלה
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
+
+
+# activity_main.xml
+ <WebView
+        android:id="@+id/activity_main_webview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+# MainActivity.java
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        // my code..
+        WebView mWebView; // יוצרים ווב-וויו
+
+        mWebView = (WebView) findViewById(R.id.activity_main_webview); // מקשרים אותו לווב-וויו עם האיי-די
+	
+	// יצירת ווב-קליינט שמטפל בממשק 
+        mWebView.setWebViewClient(new WebViewClient() {
+            @Override // הקטע הזה מסדר פתיחה של קישורים לפלאפון, מייל וכדו
+            public boolean shouldOverrideUrlLoading (WebView wView, String url)
+            {
+                if (url.startsWith("mailto:") || url.startsWith("tel:") || url.startsWith("geo:") || url.startsWith("http:") || url.startsWith("https:")) {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                    startActivity(intent);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+	// יצירת כרום-קליינט שמטפל באירועי ג'אווה סקריפט
+        mWebView.setWebChromeClient(new WebChromeClient());
+
+	// השמת הגדרות ספציפיות על הווב-וויו
+        // JS
+        mWebView.getSettings().setJavaScriptEnabled(true); // הרשאה לג'אווה סקריפט לרוץ
+        mWebView.getSettings().setDomStorageEnabled(true); 
+        mWebView.getSettings().setLoadWithOverviewMode(true);
+        mWebView.getSettings().setUseWideViewPort(true);
+        mWebView.getSettings().setAllowFileAccess(true);
+        mWebView.getSettings().setAllowContentAccess(true);
+        mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+
+	// החלק הכי חשוב; פתיחה של הלינק לאתר:
+        // load url
+        mWebView.loadUrl("file:///android_asset/www/index.html");
+    }
+}
