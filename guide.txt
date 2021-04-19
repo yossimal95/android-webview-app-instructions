@@ -1,7 +1,7 @@
 1. Create an Android Studio project.
 2. Note that you are creating a *JAVA* project and not a *KOTLIN*.
 3. When the project is ready - copy the code parts from code.txt (according to the documents names).
-4. layout.
+4. In the activity_main.xml file - make sure you are stand on "code" and not on "design".
 5. If you want to create an internal index.html file; Navigate to *File > New > Folder > assets Folder.
 6. Create the folder in the default location.
 7. Create a folder called WWW (the name doesn't really matter, it's just important to keep order).
