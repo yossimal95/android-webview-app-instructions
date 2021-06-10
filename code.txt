@@ -1,7 +1,7 @@
 # AndroidManifest.xml
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.myNewkirya.app">
+    package="com.stam.app">
     <uses-permission android:name="android.permission.INTERNET" /> // מאשר גישה לרשת
     <application
         android:allowBackup="true"
